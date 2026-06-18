@@ -4,13 +4,13 @@ namespace lasd {
 
 /* ************************************************************************** */
 
-// Costruttore da TraversableContainer
+// Constructor from TraversableContainer
 template <typename Data>
 PQHeap<Data>::PQHeap(const TraversableContainer<Data>& cont) : HeapVec<Data>(cont) {
   this->capacity = cont.Size();
 }
 
-// Costruttore da MappableContainer
+// Constructor from MappableContainer
 template <typename Data>
 PQHeap<Data>::PQHeap(MappableContainer<Data>&& cont) : HeapVec<Data>(std::move(cont)) {
   this->capacity = cont.Size();
@@ -18,7 +18,7 @@ PQHeap<Data>::PQHeap(MappableContainer<Data>&& cont) : HeapVec<Data>(std::move(c
 
 /* ************************************************************************** */
 
-// Tip (massimo)
+// Tip (maximum)
 template <typename Data>
 const Data& PQHeap<Data>::Tip() const {
   if (size == 0) throw std::length_error("Priority queue is empty");
@@ -27,7 +27,7 @@ const Data& PQHeap<Data>::Tip() const {
 
 /* ************************************************************************** */
 
-// RemoveTip (rimuove il massimo)
+// RemoveTip (removes the maximum)
 template <typename Data>
 void PQHeap<Data>::RemoveTip() {
   if (size == 0) throw std::length_error("Priority queue is empty");
@@ -38,7 +38,7 @@ void PQHeap<Data>::RemoveTip() {
 
 /* ************************************************************************** */
 
-// TipNRemove (ritorna e rimuove il massimo)
+// TipNRemove (returns and removes the maximum)
 template <typename Data>
 Data PQHeap<Data>::TipNRemove() {
   if (size == 0) throw std::length_error("Priority queue is empty");
@@ -51,7 +51,7 @@ Data PQHeap<Data>::TipNRemove() {
 
 /* ************************************************************************** */
 
-// Insert (copia)
+// Insert (copy)
 template <typename Data>
 void PQHeap<Data>::Insert(const Data& dat) {
   if (size == capacity)
@@ -77,7 +77,7 @@ void PQHeap<Data>::Insert(Data&& dat) {
 
 /* ************************************************************************** */
 
-// Change (copia)
+// Change (copy)
 template <typename Data>
 void PQHeap<Data>::Change(const unsigned long i, const Data& dat) {
   if (i >= size) throw std::out_of_range("Access out of range");

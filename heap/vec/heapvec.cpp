@@ -2,7 +2,7 @@ namespace lasd {
 
     /* ************************************************************************** */
     
-    // Costruttore da TraversableContainer
+    // Constructor from TraversableContainer
     template <typename Data>
     HeapVec<Data>::HeapVec(const TraversableContainer<Data>& cont) {
       cont.Traverse([this](const Data& val) {
@@ -14,7 +14,7 @@ namespace lasd {
     
     /* ************************************************************************** */
     
-    // Costruttore da MappableContainer (move)
+    // Constructor from MappableContainer (move)
     template <typename Data>
     HeapVec<Data>::HeapVec(MappableContainer<Data>&& cont) {
       cont.Map([this](Data& val) {
@@ -73,7 +73,7 @@ namespace lasd {
     
     /* ************************************************************************** */
     
-    // Controlla se il contenuto è un heap valido
+    // Checks whether the contents form a valid heap
     template <typename Data>
     bool HeapVec<Data>::IsHeap() const noexcept {
       for (unsigned long i = 0; i < size / 2; ++i) {
@@ -90,7 +90,7 @@ namespace lasd {
     
     /* ************************************************************************** */
     
-    // Trasforma il contenuto in un heap (bottom-up heapify)
+    // Turns the contents into a heap (bottom-up heapify)
     template <typename Data>
     void HeapVec<Data>::Heapify() noexcept {
       if (size <= 1) return;
@@ -100,7 +100,7 @@ namespace lasd {
     
     /* ************************************************************************** */
     
-    // Heapify down: sistema l'heap dal nodo i in giù
+    // Heapify down: restores the heap from node i downward
 
     template <typename Data>
     void HeapVec<Data>::HeapifyDown(unsigned long i) noexcept {
@@ -123,7 +123,7 @@ namespace lasd {
       }
     }
 
-    // HeapifyUp (per ripristinare l’heap bottom-up)
+    // HeapifyUp (restores the heap bottom-up)
     template <typename Data>
     void HeapVec<Data>::HeapifyUp(unsigned long i) noexcept {
       while (i > 0) {
@@ -139,12 +139,12 @@ namespace lasd {
     
     /* ************************************************************************** */
     
-    // Ordina i dati con heap sort (in-place, max-heap)
+    // Sorts the data with heap sort (in-place, max-heap)
     template <typename Data>
     void HeapVec<Data>::Sort() noexcept {
-      if (size <= 1) return; // Niente da ordinare (evita underflow di size - 1 con size == 0)
+      if (size <= 1) return; // Nothing to sort (avoids underflow of size - 1 when size == 0)
 
-      Heapify(); // Prima costruiamo l'heap
+      Heapify(); // First we build the heap
 
       for (unsigned long i = size - 1; i > 0; --i) {
         std::swap((*this)[0], (*this)[i]);

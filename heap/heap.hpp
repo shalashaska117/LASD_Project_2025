@@ -4,7 +4,7 @@
 /* ************************************************************************** */
 
 #include "../container/linear.hpp"
-#include "../container/container.hpp" // Per ClearableContainer
+#include "../container/container.hpp" // For ClearableContainer
 
 /* ************************************************************************** */
 

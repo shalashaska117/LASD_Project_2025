@@ -257,7 +257,7 @@ namespace lasd {
     bool SetLst<Data>::Exists(const Data& dat) const noexcept {
       typename List<Data>::Node* curr = this->head;
     
-      // Fermati se superi il valore cercato
+      // Stop once we go past the value being searched for
       while (curr != nullptr && curr->element < dat) {
         curr = curr->next;
       }

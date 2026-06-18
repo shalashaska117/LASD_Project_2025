@@ -18,12 +18,12 @@ class PQHeap : public virtual PQ<Data>,
 
 private:
 
-  unsigned long capacity = 0; // capacità fisica allocata 
+  unsigned long capacity = 0; // physical allocated capacity
 
 protected:
 
-  using Container::size;              // dimensione logica (elementi effettivi)
-  using Vector<Data>::operator[];     // accesso agli elementi
+  using Container::size;              // logical size (actual elements)
+  using Vector<Data>::operator[];     // element access
 
   using HeapVec<Data>::HeapifyDown;
   using HeapVec<Data>::HeapifyUp;
@@ -36,8 +36,8 @@ public:
   /* ************************************************************************ */
 
   // Specific constructors
-  PQHeap(const TraversableContainer<Data>&); // Costruisce da container
-  PQHeap(MappableContainer<Data>&&);         // Costruisce da container rvalue
+  PQHeap(const TraversableContainer<Data>&); // Builds from a container
+  PQHeap(MappableContainer<Data>&&);         // Builds from an rvalue container
 
   /* ************************************************************************ */
 
@@ -62,18 +62,18 @@ public:
 
   // Specific member functions (inherited from PQ)
 
-  const Data& Tip() const override;       // Ritorna il top (errore se vuoto)
-  void RemoveTip() override;              // Rimuove il top (errore se vuoto)
-  Data TipNRemove() override;             // Estrae e rimuove top (errore se vuoto)
+  const Data& Tip() const override;       // Returns the top (error if empty)
+  void RemoveTip() override;              // Removes the top (error if empty)
+  Data TipNRemove() override;             // Extracts and removes the top (error if empty)
 
-  void Insert(const Data&) override;      // Inserimento (copia)
-  void Insert(Data&&) override;           // Inserimento (move)
+  void Insert(const Data&) override;      // Insertion (copy)
+  void Insert(Data&&) override;           // Insertion (move)
 
-  void Change(const unsigned long, const Data&) override; // Cambia (copia)
-  void Change(const unsigned long, Data&&) override;      // Cambia (move)
+  void Change(const unsigned long, const Data&) override; // Change (copy)
+  void Change(const unsigned long, Data&&) override;      // Change (move)
 
-  void Clear() override;                  // Pulisce tutta la struttura
-  void Resize(const unsigned long);       // Nuovo Resize che aggiorna solo capacity, non size
+  void Clear() override;                  // Clears the whole structure
+  void Resize(const unsigned long);       // New Resize that updates only capacity, not size
 
 };
 
