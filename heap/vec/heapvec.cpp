@@ -142,8 +142,10 @@ namespace lasd {
     // Ordina i dati con heap sort (in-place, max-heap)
     template <typename Data>
     void HeapVec<Data>::Sort() noexcept {
+      if (size <= 1) return; // Niente da ordinare (evita underflow di size - 1 con size == 0)
+
       Heapify(); // Prima costruiamo l'heap
-    
+
       for (unsigned long i = size - 1; i > 0; --i) {
         std::swap((*this)[0], (*this)[i]);
         unsigned long newSize = i;
