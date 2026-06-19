@@ -2687,6 +2687,62 @@ void TestHeapVecString() {
     std::cout << std::endl;
 }
 
+void TestHeapVecSortEdgeCases() {
+    std::cout << "==== Test HeapVec::Sort() edge cases ====" << std::endl;
+
+    // Regression: Sort() on an empty heap used to underflow (size - 1 with
+    // size == 0) and throw out_of_range inside a noexcept method -> terminate.
+    lasd::HeapVec<int> empty;
+    empty.Sort();
+    Check(empty.Size() == 0, "Sort() on empty heap does not crash");
+    Check(empty.Empty(), "Empty heap is still empty after Sort()");
+
+    // Single element: nothing to do, must stay intact.
+    lasd::Vector<int> one;
+    one.Resize(1);
+    one[0] = 42;
+    lasd::HeapVec<int> single(one);
+    single.Sort();
+    Check(single.Size() == 1 && single[0] == 42, "Sort() on single element keeps it");
+
+    // Two elements out of order.
+    lasd::Vector<int> two;
+    two.Resize(2);
+    two[0] = 2; two[1] = 1;
+    lasd::HeapVec<int> pair(two);
+    pair.Sort();
+    Check(pair[0] == 1 && pair[1] == 2, "Sort() on two elements orders ascending");
+
+    // Already sorted input stays sorted.
+    lasd::Vector<int> asc;
+    asc.Resize(5);
+    asc[0] = 1; asc[1] = 2; asc[2] = 3; asc[3] = 4; asc[4] = 5;
+    lasd::HeapVec<int> sorted(asc);
+    sorted.Sort();
+    Check(sorted[0] == 1 && sorted[4] == 5, "Sort() on already-sorted input");
+
+    // All-equal elements.
+    lasd::Vector<int> eq;
+    eq.Resize(4);
+    eq[0] = 7; eq[1] = 7; eq[2] = 7; eq[3] = 7;
+    lasd::HeapVec<int> equal(eq);
+    equal.Sort();
+    Check(equal[0] == 7 && equal[3] == 7, "Sort() on all-equal elements");
+
+    // Duplicates: result must be non-decreasing.
+    lasd::Vector<int> dup;
+    dup.Resize(6);
+    dup[0] = 3; dup[1] = 1; dup[2] = 3; dup[3] = 1; dup[4] = 2; dup[5] = 3;
+    lasd::HeapVec<int> duplicates(dup);
+    duplicates.Sort();
+    bool nonDecreasing = true;
+    for (ulong i = 1; i < duplicates.Size(); ++i)
+        if (duplicates[i - 1] > duplicates[i]) nonDecreasing = false;
+    Check(nonDecreasing, "Sort() with duplicates is non-decreasing");
+
+    std::cout << std::endl;
+}
+
 void TestPQHeapInt() {
     std::cout << "==== Test PQHeap<int> ====" << std::endl;
 
@@ -3199,6 +3255,7 @@ void RunAllTests2() {
     TestHeapVecFloat();
     TestHeapVecDouble();
     TestHeapVecString();
+    TestHeapVecSortEdgeCases();
 
     TestPQHeapInt();
     TestPQHeapFloat();
